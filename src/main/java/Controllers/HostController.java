@@ -66,16 +66,12 @@ public class HostController {
     }
 
     @PostMapping("/postAnswer")
-    public String postAnswer(@RequestBody AnswersPostObject answers) {
-        try {
-            asnwerService.postAnswers(answers);
-            ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(answers);
-            System.out.println(json);
-            return "Success";
-        } catch (Exception e) {
-            return "Failure";
-        }
+    public String postAnswer(@RequestBody AnswersPostObject answers) throws Exception {
+        asnwerService.postAnswers(answers);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(answers);
+        System.out.println(json);
+        return "";
     }
 
 }

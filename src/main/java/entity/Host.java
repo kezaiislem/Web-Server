@@ -5,16 +5,11 @@
  */
 package entity;
 
-import Utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -23,10 +18,11 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class Host {
-    
+
     @Id
     private String id;
-    private Date expDate;
+    private Date strDate;
+    private boolean online;
     @JsonIgnore
     @OneToOne(mappedBy = "host")
     private Survey survey;
@@ -48,12 +44,20 @@ public class Host {
         this.id = id;
     }
 
-    public Date getExpDate() {
-        return expDate;
+    public Date getStrDate() {
+        return strDate;
     }
 
-    public void setExpDate(Date expDate) {
-        this.expDate = expDate;
+    public void setStrDate(Date strDate) {
+        this.strDate = strDate;
+    }
+
+    public boolean getOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
     }
 
     public Survey getSurvey() {
@@ -63,5 +67,5 @@ public class Host {
     public void setSurvey(Survey survey) {
         this.survey = survey;
     }
-    
+
 }

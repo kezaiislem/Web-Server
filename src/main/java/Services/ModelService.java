@@ -7,6 +7,8 @@ package Services;
 
 import dao.ModelRepository;
 import entity.Model;
+import entity.Survey;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,17 @@ public class ModelService {
         } catch (Exception e) {
             model.setTechnology(technologyService.saveTechnology(model.getTechnology()));
             result = modelRepository.save(model);
+        }
+        return result;
+    }
+    
+    public Model getSurveysByModel(int id) throws Exception {
+        Model result;
+        try {
+            result = modelRepository.findById((long)id).get();
+            
+        } catch (Exception e) {
+            throw e;
         }
         return result;
     }
