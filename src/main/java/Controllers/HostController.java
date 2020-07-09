@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -68,10 +69,16 @@ public class HostController {
     @PostMapping("/postAnswer")
     public String postAnswer(@RequestBody AnswersPostObject answers) throws Exception {
         asnwerService.postAnswers(answers);
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(answers);
-        System.out.println(json);
         return "";
+    }
+    
+    @PutMapping("/switchStatus/{id}")
+    public Host switchStatus(@PathVariable("id") String id){
+        try{
+            return hostService.switchStatus(id);
+        } catch (Exception e){
+        }
+        return null;
     }
 
 }

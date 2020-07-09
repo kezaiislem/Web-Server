@@ -29,7 +29,7 @@ public class Question implements Serializable{
     @JoinColumn(name = "section_id", nullable = false)
     private Section section;
     @JsonIgnore
-    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Answer> answers;
 
     public Question() {

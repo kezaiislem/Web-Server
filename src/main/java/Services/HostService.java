@@ -49,5 +49,15 @@ public class HostService {
     public Host getHost(String id) throws Exception {
         return hostRepository.findById(id).get();
     }
+    
+    public Host switchStatus(String id){
+        try {
+            Host host = hostRepository.findById(id).get();
+            host.setOnline(!host.getOnline());
+            return hostRepository.save(host);
+        } catch (Exception e){
+            throw e;
+        }
+    }
 
 }

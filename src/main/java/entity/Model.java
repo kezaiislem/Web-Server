@@ -33,7 +33,7 @@ public class Model implements Serializable {
     private Technology technology;
     
     @JsonIgnore
-    @OneToMany(mappedBy = "model", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "model", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Survey> surveys;
 
     public Model() {
