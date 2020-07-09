@@ -6,14 +6,10 @@
 package Controllers;
 
 import CustomObjects.AnswersPostObject;
-import CustomObjects.CustomHostObject;
 import Services.AnswerService;
 import Services.HostService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import entity.Answer;
 import entity.Host;
 import entity.Survey;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

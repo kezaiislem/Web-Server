@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import org.springframework.lang.Nullable;
 
 @Entity
 public class Question implements Serializable{
@@ -23,6 +25,7 @@ public class Question implements Serializable{
     private Long id;
     private String text;
     private int type;
+    @Column(nullable = true)
     private String[] choices;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -68,6 +71,14 @@ public class Question implements Serializable{
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public String[] getChoices() {
+        return choices;
+    }
+
+    public void setChoices(String[] choices) {
+        this.choices = choices;
     }
 
     public Section getSection() {
