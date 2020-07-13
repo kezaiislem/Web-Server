@@ -14,6 +14,7 @@ public class AnswerPostObject {
     private long id;
     private long questionId;
     private int value;
+    private int[] values;
 
     public long getId() {
         return id;
@@ -37,6 +38,14 @@ public class AnswerPostObject {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public int[] getValues() {
+        return values;
+    }
+
+    public void setValues(int[] values) {
+        this.values = values;
     }
     
 }

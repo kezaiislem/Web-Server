@@ -25,6 +25,8 @@ public class Survey implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private int phaseNumber;
+    private String title;
+    private String description;
     
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "survey", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
@@ -32,14 +34,14 @@ public class Survey implements Serializable{
     
     @JsonIgnore
     @OneToMany(mappedBy = "survey", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Answer> answers;
+    private List<PersonalAnswer> personalAnswers;
     
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "host_id", referencedColumnName = "id")
     private Host host;
     
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "model_id", nullable = false)
     private Model model;
     
@@ -68,6 +70,22 @@ public class Survey implements Serializable{
         this.phaseNumber = phaseNumber;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public List<Section> getSections() {
         return sections;
     }
@@ -76,14 +94,14 @@ public class Survey implements Serializable{
         this.sections = sections;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public List<PersonalAnswer> getPersonalAnswers() {
+        return personalAnswers;
     }
 
-    public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
+    public void setPersonalAnswers(List<PersonalAnswer> personalAnswers) {
+        this.personalAnswers = personalAnswers;
     }
-
+    
     public Host getHost() {
         return host;
     }

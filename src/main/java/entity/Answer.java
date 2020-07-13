@@ -1,6 +1,8 @@
 package entity;
 
 import CustomObjects.AnswerPostObject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,10 +20,17 @@ public class Answer implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
     private int value;
+    
+    private int[] chValues;
+    
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "survey_id", nullable = false)
-    private Survey survey;
+    @JoinColumn(name = "personal_answer_id", nullable = false)
+    private PersonalAnswer personalAnswer;
+    
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "question_id", nullable = false)
     private Question question;
@@ -31,11 +40,12 @@ public class Answer implements Serializable{
         // TODO Auto-generated constructor stub
     }
     
-    public Answer(AnswerPostObject answerPost, long surveyId) {
+    public Answer(AnswerPostObject answerPost, PersonalAnswer personalAnswer) {
         this.id = answerPost.getId();
         this.value = answerPost.getValue();
         this.question = new Question(answerPost.getQuestionId());
-        this.survey = new Survey(surveyId);
+        this.personalAnswer = personalAnswer;
+        this.chValues = answerPost.getValues();
     }
 
     public Long getId() {
@@ -54,12 +64,20 @@ public class Answer implements Serializable{
         this.value = value;
     }
 
-    public Survey getSurvey() {
-        return survey;
+    public int[] getChValues() {
+        return chValues;
     }
 
-    public void setSurvey(Survey survey) {
-        this.survey = survey;
+    public void setChValues(int[] chValues) {
+        this.chValues = chValues;
+    }
+
+    public PersonalAnswer getPersonalAnswer() {
+        return personalAnswer;
+    }
+
+    public void setPersonalAnswer(PersonalAnswer personalAnswer) {
+        this.personalAnswer = personalAnswer;
     }
 
     public Question getQuestion() {

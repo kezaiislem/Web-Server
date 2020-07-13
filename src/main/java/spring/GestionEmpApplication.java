@@ -10,16 +10,17 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan({"controllers","services"})
+@ComponentScan({"controllers", "services"})
 @EntityScan("entity")
 @EnableJpaRepositories("dao")
 public class GestionEmpApplication implements CommandLineRunner {
-	
-	public static void main(String[] args) {
-		SpringApplication.run(GestionEmpApplication.class, args);
-                
-	}
-	@Override
-	public void run(String... args) throws Exception {
-	}
+
+    public static void main(String[] args) {
+        SpringApplication.run(GestionEmpApplication.class, args);
+
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+    }
 }

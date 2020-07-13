@@ -23,16 +23,20 @@ public class Question implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
     private String text;
+    
     private int type;
+    
     @Column(nullable = true)
     private String[] choices;
+    
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "section_id", nullable = false)
     private Section section;
-    @JsonIgnore
-    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answers;
 
     public Question() {

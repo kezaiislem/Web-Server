@@ -8,15 +8,9 @@ package Services;
 import CustomObjects.AnswerPostObject;
 import CustomObjects.AnswersPostObject;
 import dao.AnswerRepository;
-import dao.FactorRepository;
-import dao.QuestionRepository;
-import dao.SectionRepository;
-import dao.SurveyRepository;
+import dao.PersonalAnswerRepository;
 import entity.Answer;
-import entity.Factor;
-import entity.Question;
-import entity.Section;
-import entity.Survey;
+import entity.PersonalAnswer;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +27,15 @@ public class AnswerService {
 
     @Autowired
     AnswerRepository answerRepository;
+    @Autowired
+    PersonalAnswerRepository personalAnswerRepository;
  
     public List<Answer> postAnswers(AnswersPostObject answersPost) throws Exception{
+        PersonalAnswer personalAnswer = new PersonalAnswer(answersPost.getSurveyId());
+        personalAnswer = personalAnswerRepository.save(personalAnswer);
         List<Answer> answers = new ArrayList<>();
         for(AnswerPostObject answerPost : answersPost.getAnswers()){
-            answers.add(new Answer(answerPost, answersPost.getSurveyId()));
+            answers.add(new Answer(answerPost, personalAnswer));
         }
         return answerRepository.saveAll(answers);
     }

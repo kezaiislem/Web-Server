@@ -26,7 +26,11 @@ public class QuestionService {
     QuestionRepository questionRepository;
 
     public List<Question> postQuestions(List<Question> questions) throws Exception {
-        return (List<Question>) questionRepository.saveAll(questions);
+        List<Question> result = (List<Question>) questionRepository.saveAll(questions);
+        for(Question q : result){
+            q.setAnswers(null);
+        }
+        return (List<Question>) result;
     }
     
     public List<Question> searchQuestions(String factorName, String technologyField, String technologyName, String evaluationContext){

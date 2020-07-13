@@ -1,5 +1,6 @@
 package Controllers;
 
+import Services.MailService;
 import dao.EmployeRepository;
 import entity.Employe;
 import java.util.List;
@@ -20,6 +21,9 @@ public class EmployeRestService {
 	
 	@Autowired
 	EmployeRepository employeRepository;
+        
+        @Autowired
+        MailService mailService;
 	
 	@GetMapping("/employeName/{nom}")
 	public List<Employe> getEmployesByName(@PathVariable("nom") String nom){
@@ -56,6 +60,11 @@ public class EmployeRestService {
 	@DeleteMapping("/delete/{id}")
 	public void deleteEmploye(@PathVariable("id") long id){
 		employeRepository.deleteById(id);
+	}
+        
+        @GetMapping("/mailer")
+	public void sendMail(){
+            mailService.sendSimpleMessage("kezaiislem3@gmail.com", "PFE", "Nour Ali super hatba");
 	}
 
 }

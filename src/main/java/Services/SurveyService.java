@@ -46,5 +46,9 @@ public class SurveyService {
     public void delete(long id) throws Exception{
         surveyRepository.deleteById(id);
     }
+    
+    public Survey get(long id) throws Exception{
+        return surveyRepository.findById(id).get();
+    }
 
 }

@@ -2,8 +2,10 @@ package Controllers;
 
 import Services.ModelService;
 import Services.SurveyService;
-import dao.SectionRepository;
+import entity.Answer;
 import entity.Model;
+import entity.PersonalAnswer;
+import entity.Section;
 import entity.Survey;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
@@ -37,6 +38,18 @@ public class SurveyConrtoller {
             return result;
         } catch (Exception e) {
             return new ArrayList<Survey>();
+        }
+    }
+    
+    @GetMapping("/answers/{id}")
+    public List<Section> getSurveyAnswers(@PathVariable("id") int id) {
+        List<Section> result = null;
+        try {
+            Survey survey = surveyService.get(id);
+            result = survey.getSections();
+            return result;
+        } catch (Exception e) {
+            return new ArrayList<>();
         }
     }
 

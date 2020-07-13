@@ -5,10 +5,16 @@
  */
 package Controllers;
 
+import CustomObjects.AnswerPostObject;
 import CustomObjects.AnswersPostObject;
+import CustomObjects.MailingRequest;
 import Services.AnswerService;
 import Services.HostService;
+import Services.MailService;
+import Utils.Constants;
 import entity.Host;
+import entity.Question;
+import entity.Section;
 import entity.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,6 +37,8 @@ public class HostController {
     HostService hostService;
     @Autowired
     AnswerService asnwerService;
+    @Autowired
+    MailService mailService;
 
     @PostMapping("/host")
     public Survey hostSurvey(@RequestBody Survey survey) {
@@ -55,7 +63,12 @@ public class HostController {
     public Survey getSurvey(@PathVariable("id") String id) {
         try {
             Survey result = hostService.getHost(id).getSurvey();
-            result.setAnswers(null);
+            for(Section section : result.getSections()){
+                for(Question question : section.getQuestions()){
+                    question.setAnswers(null);
+                }
+            }
+            result.setPersonalAnswers(null);
             return result;
         } catch (Exception e) {
             return null;
@@ -67,14 +80,31 @@ public class HostController {
         asnwerService.postAnswers(answers);
         return "";
     }
-    
+
     @PutMapping("/switchStatus/{id}")
-    public Host switchStatus(@PathVariable("id") String id){
-        try{
+    public Host switchStatus(@PathVariable("id") String id) {
+        try {
             return hostService.switchStatus(id);
-        } catch (Exception e){
+        } catch (Exception e) {
         }
         return null;
+    }
+
+    @PutMapping("/share/{id}")
+    public void shareSurvey(@PathVariable("id") String id, @RequestBody MailingRequest mailingRequest) {
+        try {
+            if (mailingRequest != null) {
+                Host host = hostService.getHost(id);
+                if (host != null) {
+                    String link = "http://localhost:4200/survey/"+host.getId();
+                    for(String destination : mailingRequest.getDestinations()){
+                        mailService.sendSimpleMessage(destination, mailingRequest.getSubject(), Constants.SHARE_SURVEY_MAIL + link);
+                    }
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 }
