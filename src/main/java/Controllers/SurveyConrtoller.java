@@ -1,5 +1,6 @@
 package Controllers;
 
+import CustomObjects.CustomSurveysObject;
 import Services.ModelService;
 import Services.SurveyService;
 import entity.Answer;
@@ -27,17 +28,19 @@ public class SurveyConrtoller {
     SurveyService surveyService;
 
     @GetMapping("/modelSurveys/{id}")
-    public List<Survey> getHostedSurveys(@PathVariable("id") int id) {
-        List<Survey> result;
+    public List<CustomSurveysObject> getHostedSurveys(@PathVariable("id") int id) {
+        List<Survey> surveys;
+        List<CustomSurveysObject> result = new ArrayList<>();
         try {
             Model model = modelService.getSurveysByModel(id);
-            result = model.getSurveys();
-            for (Survey s : result) {
+            surveys = model.getSurveys();
+            for (Survey s : surveys) {
                 s.setSections(null);
+                result.add(new CustomSurveysObject(s));
             }
             return result;
         } catch (Exception e) {
-            return new ArrayList<Survey>();
+            return result;
         }
     }
     
