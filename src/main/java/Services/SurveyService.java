@@ -5,13 +5,8 @@
  */
 package Services;
 
-import dao.FactorRepository;
-import dao.QuestionRepository;
-import dao.SectionRepository;
 import dao.SurveyRepository;
 import entity.Factor;
-import entity.Question;
-import entity.Section;
 import entity.Survey;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +25,13 @@ public class SurveyService {
     SurveyRepository surveyRepository;
     @Autowired
     SectionService sectionService;
-    @Autowired
-    FactorRepository factorRepository;
  
     public Survey postSurvey(Survey survey) throws Exception{
-        List<Section> sections = survey.getSections();
-        survey.setSections(null);
+        List<Factor> factors = survey.getFactors();
+        survey.setFactors(null);
         
         Survey result = surveyRepository.save(survey);
-        result.setSections(sectionService.postSections(sections, result));
+        result.setFactors(sectionService.postSections(factors, result));
         
         return result;
     }

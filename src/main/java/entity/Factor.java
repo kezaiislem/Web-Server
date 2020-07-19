@@ -1,6 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -9,30 +15,38 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+/**
+ *
+ * @author ISLEM
+ */
 @Entity
-public class Factor implements Serializable {
+public class Factor implements Serializable{
 
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO) 
     private Long id;
-    private String name;
-    private boolean mtaDefault;
+    String title; 
+    String description;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "factor", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    public List<Question> questions;
     @JsonIgnore
-    @OneToMany(mappedBy = "factor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Section> sections;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "survey_id", nullable = true)
+    private Survey survey;
 
     public Factor() {
-        super();
-        // TODO Auto-generated constructor stub
     }
 
-    public Factor(String name) {
-        super();
-        this.name = name;
+    public Factor(String title, String description) {
+        this.title = title;
+        this.description = description;
     }
 
     public Long getId() {
@@ -43,28 +57,36 @@ public class Factor implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public boolean getMtaDefault() {
-        return mtaDefault;
+    public String getDescription() {
+        return description;
     }
 
-    public void setMtaDefault(boolean mtaDefault) {
-        this.mtaDefault = mtaDefault;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public List<Section> getSections() {
-        return sections;
+    public List<Question> getQuestions() {
+        return questions;
     }
 
-    public void setSections(List<Section> sections) {
-        this.sections = sections;
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
+
+    public Survey getSurvey() {
+        return survey;
+    }
+
+    public void setSurvey(Survey survey) {
+        this.survey = survey;
     }
     
 }

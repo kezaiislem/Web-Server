@@ -14,7 +14,7 @@ import Services.MailService;
 import Utils.Constants;
 import entity.Host;
 import entity.Question;
-import entity.Section;
+import entity.Factor;
 import entity.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -63,8 +63,8 @@ public class HostController {
     public Survey getSurvey(@PathVariable("id") String id) {
         try {
             Survey result = hostService.getHost(id).getSurvey();
-            for(Section section : result.getSections()){
-                for(Question question : section.getQuestions()){
+            for(Factor factor : result.getFactors()){
+                for(Question question : factor.getQuestions()){
                     question.setAnswers(null);
                 }
             }

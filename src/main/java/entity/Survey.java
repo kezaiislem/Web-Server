@@ -30,7 +30,7 @@ public class Survey implements Serializable{
     
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "survey", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Section> sections;
+    private List<Factor> factors;
     
     @JsonIgnore
     @OneToMany(mappedBy = "survey", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
@@ -86,12 +86,12 @@ public class Survey implements Serializable{
         this.description = description;
     }
 
-    public List<Section> getSections() {
-        return sections;
+    public List<Factor> getFactors() {
+        return factors;
     }
 
-    public void setSections(List<Section> sections) {
-        this.sections = sections;
+    public void setFactors(List<Factor> factors) {
+        this.factors = factors;
     }
 
     public List<PersonalAnswer> getPersonalAnswers() {

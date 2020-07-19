@@ -33,8 +33,8 @@ public class Question implements Serializable{
     
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "section_id", nullable = false)
-    private Section section;
+    @JoinColumn(name = "factor_id", nullable = false)
+    private Factor factor;
     
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answers;
@@ -85,12 +85,12 @@ public class Question implements Serializable{
         this.choices = choices;
     }
 
-    public Section getSection() {
-        return section;
+    public Factor getFactor() {
+        return factor;
     }
 
-    public void setSection(Section section) {
-        this.section = section;
+    public void setFactor(Factor factor) {
+        this.factor = factor;
     }
 
     public List<Answer> getAnswers() {

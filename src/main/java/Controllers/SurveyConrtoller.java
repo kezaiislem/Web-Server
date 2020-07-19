@@ -6,7 +6,7 @@ import Services.SurveyService;
 import entity.Answer;
 import entity.Model;
 import entity.PersonalAnswer;
-import entity.Section;
+import entity.Factor;
 import entity.Survey;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class SurveyConrtoller {
             Model model = modelService.getSurveysByModel(id);
             surveys = model.getSurveys();
             for (Survey s : surveys) {
-                s.setSections(null);
+                s.setFactors(null);
                 result.add(new CustomSurveysObject(s));
             }
             return result;
@@ -45,11 +45,11 @@ public class SurveyConrtoller {
     }
     
     @GetMapping("/answers/{id}")
-    public List<Section> getSurveyAnswers(@PathVariable("id") int id) {
-        List<Section> result = null;
+    public List<Factor> getSurveyAnswers(@PathVariable("id") int id) {
+        List<Factor> result = null;
         try {
             Survey survey = surveyService.get(id);
-            result = survey.getSections();
+            result = survey.getFactors();
             return result;
         } catch (Exception e) {
             return new ArrayList<>();

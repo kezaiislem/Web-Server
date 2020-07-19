@@ -7,7 +7,7 @@ package Services;
 
 import dao.QuestionRepository;
 import entity.Question;
-import entity.Section;
+import entity.Factor;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

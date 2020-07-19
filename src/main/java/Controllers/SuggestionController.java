@@ -3,7 +3,7 @@ package Controllers;
 import Services.QuestionService;
 import Services.SectionService;
 import entity.Question;
-import entity.Section;
+import entity.Factor;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,8 +21,8 @@ public class SuggestionController {
     QuestionService questionService;
 
     @GetMapping("/sectionsuggestions")
-    public List<Section> getSections(@RequestParam("technologyname") String technologyName, @RequestParam("technologyfield") String technologyField, @RequestParam("evaluationContext") String evaluationContext, @RequestParam("factorname") String factorName) {
-        return (List<Section>) sectionService.searchSections(factorName, technologyName, technologyField, evaluationContext);
+    public List<Factor> getSections(@RequestParam("technologyname") String technologyName, @RequestParam("technologyfield") String technologyField, @RequestParam("evaluationContext") String evaluationContext, @RequestParam("factorname") String factorName) {
+        return (List<Factor>) sectionService.searchSections(factorName, technologyName, technologyField, evaluationContext);
     }
 
     @GetMapping("/questionsuggestions")

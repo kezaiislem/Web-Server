@@ -5,10 +5,9 @@
  */
 package Services;
 
-import dao.FactorRepository;
 import dao.SectionRepository;
 import entity.Question;
-import entity.Section;
+import entity.Factor;
 import entity.Survey;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,21 +27,18 @@ public class SectionService {
     SectionRepository sectionRepository;
     @Autowired
     QuestionService questionService;
-    @Autowired
-    FactorRepository factorRepository;
 
-    public List<Section> postSections(List<Section> sections, Survey survey) throws Exception {
+    public List<Factor> postSections(List<Factor> factors, Survey survey) throws Exception {
 
-        List<Section> result = new ArrayList<>();
+        List<Factor> result = new ArrayList<>();
         
-        for (Section c : sections) { 
-            //c.setFactor(factorRepository.findById(c.getFactor().getId()).get());
+        for (Factor c : factors) { 
             List<Question> questions = c.getQuestions();
             c.questions = null;
             c.setSurvey(survey);
-            Section section = sectionRepository.save(c);
+            Factor section = sectionRepository.save(c);
             for (Question q : questions) {
-                q.setSection(section);
+                q.setFactor(section);
             }
             section.setQuestions(questionService.postQuestions(questions));
             result.add(section);
@@ -51,13 +47,13 @@ public class SectionService {
         return result;
     }
     
-    public List<Section> searchSections(String factorName, String technologyName, String technologyField, String evaluationContext){
+    public List<Factor> searchSections(String factorName, String technologyName, String technologyField, String evaluationContext){
         try {
             System.out.println(factorName+" "+technologyField+" "+technologyName);
             return sectionRepository.findByFactorTechnlogyNameAndField(factorName, technologyName, technologyField, evaluationContext);
         } catch (Exception e){
             e.printStackTrace();
-            return new ArrayList<Section>();
+            return new ArrayList<Factor>();
         }
     }
 
