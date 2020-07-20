@@ -5,7 +5,6 @@
  */
 package Services;
 
-import dao.SectionRepository;
 import entity.Question;
 import entity.Factor;
 import entity.Survey;
@@ -14,6 +13,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
+import dao.FactorRepository;
 
 /**
  *
@@ -21,10 +21,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Configurable
-public class SectionService {
+public class FactorService {
 
     @Autowired
-    SectionRepository sectionRepository;
+    FactorRepository sectionRepository;
     @Autowired
     QuestionService questionService;
 
@@ -49,8 +49,13 @@ public class SectionService {
     
     public List<Factor> searchSections(String factorName, String technologyName, String technologyField, String evaluationContext){
         try {
-            System.out.println(factorName+" "+technologyField+" "+technologyName);
-            return sectionRepository.findByFactorTechnlogyNameAndField(factorName, technologyName, technologyField, evaluationContext);
+            List<Factor> factors = sectionRepository.findByFactorTechnlogyNameAndField(factorName, technologyName, technologyField, evaluationContext);
+            for(Factor f : factors){
+                for(Question q : f.questions){
+                    q.setAnswers(null);
+                }
+            }
+            return factors;
         } catch (Exception e){
             e.printStackTrace();
             return new ArrayList<Factor>();

@@ -1,7 +1,7 @@
 package Controllers;
 
 import Services.QuestionService;
-import Services.SectionService;
+import Services.FactorService;
 import entity.Question;
 import entity.Factor;
 import java.util.List;
@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class SuggestionController {
 
     @Autowired
-    SectionService sectionService;
+    FactorService factorService;
     @Autowired
     QuestionService questionService;
 
-    @GetMapping("/sectionsuggestions")
+    @GetMapping("/factorsuggestions")
     public List<Factor> getSections(@RequestParam("technologyname") String technologyName, @RequestParam("technologyfield") String technologyField, @RequestParam("evaluationContext") String evaluationContext, @RequestParam("factorname") String factorName) {
-        return (List<Factor>) sectionService.searchSections(factorName, technologyName, technologyField, evaluationContext);
+        return (List<Factor>) factorService.searchSections(factorName, technologyName, technologyField, evaluationContext);
     }
 
     @GetMapping("/questionsuggestions")

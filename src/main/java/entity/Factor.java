@@ -8,6 +8,8 @@ package entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -24,14 +26,14 @@ import javax.persistence.OneToMany;
  * @author ISLEM
  */
 @Entity
-public class Factor implements Serializable{
+public class Factor implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) 
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    String title; 
+    String title;
     String description;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "factor", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
@@ -44,9 +46,10 @@ public class Factor implements Serializable{
     public Factor() {
     }
 
-    public Factor(String title, String description) {
+    public Factor(String title, String description, Collection<Question> questions) {
         this.title = title;
         this.description = description;
+        //this.questions = new ArrayList<>(questions);
     }
 
     public Long getId() {
@@ -88,5 +91,5 @@ public class Factor implements Serializable{
     public void setSurvey(Survey survey) {
         this.survey = survey;
     }
-    
+
 }

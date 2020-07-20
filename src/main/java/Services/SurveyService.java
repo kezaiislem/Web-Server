@@ -24,7 +24,7 @@ public class SurveyService {
     @Autowired
     SurveyRepository surveyRepository;
     @Autowired
-    SectionService sectionService;
+    FactorService sectionService;
  
     public Survey postSurvey(Survey survey) throws Exception{
         List<Factor> factors = survey.getFactors();
