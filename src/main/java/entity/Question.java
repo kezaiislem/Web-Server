@@ -43,6 +43,12 @@ public class Question implements Serializable{
         super();
         // TODO Auto-generated constructor stub
     }
+
+    public Question(String text, int type, String[] choices) {
+        this.text = text;
+        this.type = type;
+        this.choices = choices;
+    }
     
     public Question(long id) {
         this.id = id;

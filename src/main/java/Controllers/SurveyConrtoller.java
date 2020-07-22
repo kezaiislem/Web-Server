@@ -1,5 +1,6 @@
 package Controllers;
 
+import CustomObjects.CustomPersonalAnswer;
 import CustomObjects.CustomSurveysObject;
 import Services.ModelService;
 import Services.SurveyService;
@@ -50,6 +51,21 @@ public class SurveyConrtoller {
         try {
             Survey survey = surveyService.get(id);
             result = survey.getFactors();
+            return result;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+    
+    @GetMapping("/personalanswers/{id}")
+    public List<CustomPersonalAnswer> getSurveyPersonalAnswers(@PathVariable("id") int id) {
+        List<CustomPersonalAnswer> result = new ArrayList<>();
+        try {
+            Survey survey = surveyService.get(id);
+            List<PersonalAnswer> personalAnswers = survey.getPersonalAnswers();
+            for(PersonalAnswer personalAnswer : personalAnswers){
+                result.add(new CustomPersonalAnswer(personalAnswer));
+            }
             return result;
         } catch (Exception e) {
             return new ArrayList<>();

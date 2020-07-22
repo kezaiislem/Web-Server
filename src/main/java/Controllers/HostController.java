@@ -63,6 +63,9 @@ public class HostController {
     public Survey getSurvey(@PathVariable("id") String id) {
         try {
             Survey result = hostService.getHost(id).getSurvey();
+            if(!result.getHost().getOnline()){
+                return null;
+            }
             for(Factor factor : result.getFactors()){
                 for(Question question : factor.getQuestions()){
                     question.setAnswers(null);
