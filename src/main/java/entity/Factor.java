@@ -38,6 +38,7 @@ public class Factor implements Serializable {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "factor", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     public List<Question> questions;
+    public boolean evaluationFactor;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "survey_id", nullable = true)
@@ -82,6 +83,14 @@ public class Factor implements Serializable {
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    public boolean getEvaluationFactor() {
+        return evaluationFactor;
+    }
+
+    public void setEvaluationFactor(boolean evaluationFactor) {
+        this.evaluationFactor = evaluationFactor;
     }
 
     public Survey getSurvey() {
