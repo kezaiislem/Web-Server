@@ -60,8 +60,34 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public User getEmployee(@PathVariable("id") long id) {
+    public User getUser(@PathVariable("id") long id) {
         return userRepository.findById(id).get();
+    }
+    
+    @GetMapping("/chkE/{email}")
+    public Boolean getUserByMail(@PathVariable("email") String email) {
+        try{
+            User user = userRepository.findByEmail(email).get(0);
+            if(user != null){
+                return true;
+            }
+        } catch (Exception e){
+            //e.printStackTrace();
+        }
+        return false;
+    }
+    
+    @GetMapping("/chkU/{username}")
+    public Boolean getUserByUsername(@PathVariable("username") String username) {
+        try{
+            User user = userRepository.findByUsername(username).get(0);
+            if(user != null){
+                return true;
+            }
+        } catch (Exception e){
+            //e.printStackTrace();
+        }
+        return false;
     }
 
     @PutMapping("/updateUser/{id}")
@@ -71,8 +97,17 @@ public class UserController {
     }
 
     @PostMapping("/newUser")
-    public User addUser(@RequestBody User user) {
-        return userRepository.save(user);
+    public Boolean addUser(@RequestBody User user) {
+        try{
+            user.setId((long)-1);
+            User res = userRepository.save(user);
+            if(res != null){
+                return true;
+            }
+        } catch(Exception e){
+            
+        }
+        return false;
     }
 
     @DeleteMapping("/deleteUser/{id}")
